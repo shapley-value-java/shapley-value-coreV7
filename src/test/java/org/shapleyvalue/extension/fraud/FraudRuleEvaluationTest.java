@@ -3,10 +3,13 @@ package org.shapleyvalue.extension.fraud;
 import static org.junit.Assert.*;
 
 import java.util.Map;
-
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FraudRuleEvaluationTest {
+	
+	private final Logger logger = LoggerFactory.getLogger(FraudRuleEvaluationTest.class);
 
 	@Test
 	public void testEvaluationOneRule() {
@@ -93,10 +96,9 @@ public class FraudRuleEvaluationTest {
 		//double phiRule7 = output.get("Rule7");
 		//double phiRule8 = output.get("Rule8");
 		//double phiRule9 = output.get("Rule9");
-
-		
-		System.out.println(phiRule1);
-		System.out.println(phiRule2);
+	
+		logger.info("phiRule1={}",phiRule1);
+		logger.info("phiRule2={}",phiRule2);
 		//System.out.println(phiRule3);
 		//System.out.println(phiRule4);
 		//System.out.println(phiRule5);
