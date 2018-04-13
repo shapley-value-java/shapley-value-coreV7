@@ -17,7 +17,6 @@ public class TaxiCalculation {
 	private TaxiCalculation(TaxiCalculationBuilder builder) {
 
 		Set<Set<Integer>> sets = Powerset.calculate(builder.getNbPlayers());
-		sets.remove(Powerset.nullSet);
 
 		CharacteristicFunctionBuilder cfunctionBuilder = 
 				new CharacteristicFunction.CharacteristicFunctionBuilder(builder.getNbPlayers());

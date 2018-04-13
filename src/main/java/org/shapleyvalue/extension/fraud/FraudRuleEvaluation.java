@@ -21,7 +21,6 @@ public class FraudRuleEvaluation {
 	
 	public FraudRuleEvaluation(FraudRuleEvaluationBuilder builder) {
 		Set<Set<Integer>> sets = Powerset.calculate(builder.getNbPlayers());
-		sets.remove(Powerset.nullSet);
 
 		CharacteristicFunctionBuilder cfunctionBuilder = 
 				new CharacteristicFunction.CharacteristicFunctionBuilder(builder.getNbPlayers());
@@ -68,7 +67,6 @@ public class FraudRuleEvaluation {
 		}
 		
 		public Map<Integer, String> getRange() {
-			// TODO Auto-generated method stub
 			return range;
 		}
 
