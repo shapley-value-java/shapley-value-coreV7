@@ -14,7 +14,6 @@ import org.shapleyvalue.util.Permutations;
 
 public class ShapleyValue {
 	
-	//private Map<Set<Integer>, Double> input; 
 	private CharacteristicFunction cfunction;
 	private Map<Integer,Double> output;
 	
@@ -26,7 +25,6 @@ public class ShapleyValue {
 
 		this.output = new HashMap<>();
 		
-		//this.input.putAll(input);
 		if(logger.isDebugEnabled()) logger.debug("ShapleyValue cfunction={}",this.cfunction);
 	}
 	
@@ -38,8 +36,8 @@ public class ShapleyValue {
 	public Map<Integer,Double> calculate(boolean normalized) {
 		if(logger.isDebugEnabled()) logger.debug("ShapleyValue calculate started");
 		
-		int size = cfunction.getNbPlayers();
-		int factorielSize = FactorialUtil.factorial(size);
+		long size = cfunction.getNbPlayers();
+		long factorielSize = FactorialUtil.factorial(size);
 		List<List<Integer>> permutations = Permutations.getAllPermutation(size);
 		
 		for(int i=1; i<=size; i++) {

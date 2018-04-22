@@ -12,7 +12,7 @@ public class Permutations {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Permutations.class);
 	
-	public static List<List<Integer>> getAllPermutation(int size) {
+	public static List<List<Integer>> getAllPermutation(long size) {
 		
 		List<List<Integer>> res = new ArrayList<>();
 		List<Integer> elements = new ArrayList<>();
