@@ -1,4 +1,4 @@
-package org.shapleyvalue.extension.taxi;
+package org.shapleyvalue.application.taxi;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +8,25 @@ import org.shapleyvalue.core.ShapleyValue;
 import org.shapleyvalue.core.CharacteristicFunction.CharacteristicFunctionBuilder;
 import org.shapleyvalue.util.Powerset;
 
+/**
+ * Application of the Shapley value for sharing a taxi
+ * How to divide "fairly" the cost when we share a taxi
+ * 
+ * Example: 
+ * A, B and C are sharing a taxi (they are going to the same direction...)
+ * For A alone it costs 6.0
+ * For B alone it costs 12.0
+ * For C alone it costs 42.0
+ * 
+ * Result:
+ * Shapley value for A is 2.0
+ * Shapley value for B is 5.0
+ * Shapley value for C is 35.0
+ * the sum is 42.0 (the highest cost alone)
+ * 
+ * @author Franck Benault
+ *
+ */
 public class TaxiCalculation {
 	
 	private CharacteristicFunction cfunction;
@@ -15,7 +34,6 @@ public class TaxiCalculation {
 	private Map<Integer, String> range;
 	
 	private TaxiCalculation(TaxiCalculationBuilder builder) {
-
 		Set<Set<Integer>> sets = Powerset.calculate(builder.getNbPlayers());
 
 		CharacteristicFunctionBuilder cfunctionBuilder = 
@@ -33,7 +51,12 @@ public class TaxiCalculation {
 		cfunction = cfunctionBuilder.build();
 	}
 	
-	
+	/**
+	 * Builder for TaxiCalculation class
+	 * 
+	 * @author Franck Benault
+	 *
+	 */
 	public static class TaxiCalculationBuilder {
 		private int nbPlayers;
 		private Map<Integer, Double> v;
@@ -73,7 +96,8 @@ public class TaxiCalculation {
 
 	public Map<String, Double> calculate() {
 		shapleyValue = new ShapleyValue(cfunction);
-		Map<Integer, Double> tempRes = shapleyValue.calculate();
+		shapleyValue.calculate(); 
+		Map<Integer, Double> tempRes = shapleyValue.getResult(); 
 		Map<String, Double> res = new HashMap<>();
 		for(Integer i : tempRes.keySet()) {
 			res.put(range.get(i), tempRes.get(i));
