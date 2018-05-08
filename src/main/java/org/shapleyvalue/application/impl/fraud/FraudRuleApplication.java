@@ -1,4 +1,4 @@
-package org.shapleyvalue.application.fraud;
+package org.shapleyvalue.application.impl.fraud;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.shapleyvalue.application.CoalitionStrategy;
-import org.shapleyvalue.application.ShapleyApplication;
-import org.shapleyvalue.application.ShapleyApplicationException;
+import org.shapleyvalue.application.facade.CoalitionStrategy;
+import org.shapleyvalue.application.facade.ShapleyApplication;
+import org.shapleyvalue.application.facade.ShapleyApplicationException;
 import org.shapleyvalue.core.CharacteristicFunction;
 import org.shapleyvalue.core.CharacteristicFunction.CharacteristicFunctionBuilder;
 import org.shapleyvalue.core.ShapleyValue;
