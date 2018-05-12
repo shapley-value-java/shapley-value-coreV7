@@ -34,7 +34,7 @@ public class Powerset {
 	        
 	    }
 
-	    logger.debug("Powerset for {} element, result {}",nbElements, result);
+	    logger.debug("Powerset for {} element ...",nbElements);
 		return result;
 	}
 	
