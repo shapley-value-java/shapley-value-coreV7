@@ -12,5 +12,9 @@ public enum CoalitionStrategy {
 
 	SEQUENTIAL,
 	
-	RANDOM
+	RANDOM;
+	
+    public boolean isSequential(){
+        return this.equals(SEQUENTIAL);
+    }
 }
