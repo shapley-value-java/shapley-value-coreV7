@@ -2,7 +2,6 @@ package microbenchmark;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -115,8 +114,7 @@ public class ParliamentCalculationBenchmarkTest {
 		
 		showAndCheckResult(output);
 		
-		assertTrue(duration3<= duration2);
-		assertTrue(duration3<= duration1);
+
 
 	}
 
