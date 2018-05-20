@@ -116,7 +116,8 @@ public class FraudRuleApplicationTest {
 	
 		
 		for(int i=1; i<10;i++) {
-		Map<String,Double> output = evaluation.calculate(10_000,CoalitionStrategy.RANDOM);
+			Map<String,Double> output = evaluation.calculate(10_000,CoalitionStrategy.RANDOM);
+			logger.info("OUTPUT {}",output);
 			double phiRule1 = output.get("Rule1");
 			double phiRule2 = output.get("Rule2");
 			logger.info("loop {}",i);

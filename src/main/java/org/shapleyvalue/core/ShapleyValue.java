@@ -1,10 +1,8 @@
 package org.shapleyvalue.core;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -81,23 +79,25 @@ public class ShapleyValue {
 
 	}
 	
-	public Map<Integer, Double> getResult() {
+	public List<Double> getResult() {
 		return getResult(0) ;
 	}
 	
-	public Map<Integer, Double> getResult(int normalizedValue) {
+	public List<Double> getResult(int normalizedValue) {
 		
-		Map<Integer, Double> res = new HashMap<>();
+		List<Double> res = new ArrayList<>();
 		double total = 0;
+		res.add(0.0);
 		for (int i = 1; i <= size; i++) {
 			total += output.get(i) / factorialSize;
-			res.put(i, output.get(i) / factorialSize);
+			res.add(output.get(i) / factorialSize);
 		}
 
 		if (normalizedValue!=0) {
-			Map<Integer, Double> normalizedRes = new HashMap<>();
+			List<Double> normalizedRes = new ArrayList<>();
+			normalizedRes.add(0.0);
 			for (int i = 1; i <= size; i++) {
-				normalizedRes.put(i, res.get(i) / total);
+				normalizedRes.add(res.get(i) / total);
 			}
 			if (logger.isDebugEnabled())
 				logger.debug("ShapleyValue calculate normalizedOutput={}", normalizedRes);

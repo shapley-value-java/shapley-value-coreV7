@@ -23,6 +23,7 @@ public class GloveGameApplicationTest {
 	
 		
 		Map<String,Double> output = evaluation.calculate();
+		logger.info("output= {} ", output);
 		double phiAdam= output.get("Adam");
 		
 		assertEquals(phiAdam, 0.0, 0.01);
