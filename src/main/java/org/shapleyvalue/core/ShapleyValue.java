@@ -1,5 +1,6 @@
 package org.shapleyvalue.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +18,7 @@ import org.shapleyvalue.util.permutation.RandomPermutations;
 public class ShapleyValue {
 	
 	private CharacteristicFunction cfunction;
-	private Map<Integer, Double> output;
+	private List<Double> output;
 	private PermutationLinkList permutations;
 	private long currentRange;
 	private int size;
@@ -32,9 +33,9 @@ public class ShapleyValue {
 		currentRange = 0;
 		factorialSize = FactorialUtil.factorial(size);
 
-		this.output = new HashMap<>();
-		for (int i = 1; i <= size; i++) {
-			output.put(i, 0.0);
+		this.output = new ArrayList<>();
+		for (int i = 0; i <= size; i++) {
+			output.add(0.0);
 		}
 	}
 	
@@ -72,7 +73,7 @@ public class ShapleyValue {
 			for (Integer element : coalition) {
 				set.add(element);
 				double val = cfunction.getValue(set) - prevVal;
-				output.put(element, val + output.get(element));
+				output.set(element, val + output.get(element));
 				prevVal += val;
 			}
 
@@ -118,15 +119,15 @@ public class ShapleyValue {
 
 	
 	
-	public Map<Integer,Double> calculate(boolean normalized) {
+	public List<Double> calculate(boolean normalized) {
 		if(logger.isDebugEnabled()) logger.debug("ShapleyValue calculate started");
 		
 		long size = cfunction.getNbPlayers();
 		long factorielSize = FactorialUtil.factorial(size);
 		List<List<Integer>> permutations = Permutations.getAllPermutation(size);
 		
-		for(int i=1; i<=size; i++) {
-			output.put(i, 0.0);
+		for(int i=0; i<=size; i++) {
+			output.set(i, 0.0);
 		}
 		
 		for(List<Integer> coalition : permutations) {
@@ -135,7 +136,7 @@ public class ShapleyValue {
 			for(Integer element : coalition) {
 				set.add(element);
 				double val = cfunction.getValue(set)-prevVal;
-				output.put(element,val+output.get(element));
+				output.set(element,val+output.get(element));
 				prevVal += val;
 			}
 		}
@@ -143,12 +144,12 @@ public class ShapleyValue {
 		double total = 0;
 		for(int i=1; i<=size; i++) {
 			total += output.get(i)/factorielSize;
-			output.put(i, output.get(i)/factorielSize);
+			output.set(i, output.get(i)/factorielSize);
 		}
 		
 		if(normalized) {
 			for(int i=1; i<=size; i++) {
-				output.put(i, output.get(i)/total);
+				output.set(i, output.get(i)/total);
 			}
 		}
 		
