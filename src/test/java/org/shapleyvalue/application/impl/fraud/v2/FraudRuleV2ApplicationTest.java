@@ -8,7 +8,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NavigableSet;
@@ -187,10 +189,13 @@ public class FraudRuleV2ApplicationTest {
 		FraudRuleV2ApplicationBuilder builder=
 				new FraudRuleV2Application.FraudRuleV2ApplicationBuilder();
 		
+		
 		ClassLoader classLoader = getClass().getClassLoader();
-		FileReader file = new FileReader(classLoader.getResource("shapley_data_small.csv").getFile());
-				
-		try (BufferedReader br = new BufferedReader(file)) { //new FileReader("C:\\Users\\AdminFBE\\workspace\\shapley-value-java\\shapley-value-core\\src\\test\\resources\\shapley_data_small.csv"))) {
+		//FileReader file = new FileReader(classLoader.getResource("shapley_data_small.csv").getFile());
+		FileReader file = new FileReader(classLoader.getResource("foo3.csv").getFile());
+
+		
+		try (BufferedReader br = new BufferedReader(file)) { 
 		    String line;
 		    while ((line = br.readLine()) != null) {
 		       builder.addRule(new RuledTransaction(line));
@@ -201,17 +206,17 @@ public class FraudRuleV2ApplicationTest {
 		
 		TreeMap<String, Double> prev_sorted_map = new TreeMap<String, Double>();
 
-		for(int i=1; i<=1;i++) {
+		for(int i=1; i<=10;i++) {
 			Stopwatch stopwatch = Stopwatch.createStarted();
 			
-			Map<String,Double> output = evaluation.calculate(10,CoalitionStrategy.RANDOM);
+			Map<String,Double> output = evaluation.calculate(30,CoalitionStrategy.RANDOM,4);
 			long duration = stopwatch.elapsed(TimeUnit.SECONDS);
 
 
 	        ValueComparator bvc = new ValueComparator(output);
 	        TreeMap<String, Double> sorted_map = new TreeMap<String, Double>(bvc);
 			sorted_map.putAll(output);
-			System.out.println("loop "+i);
+			logger.info("loop {}",i);
 			for(Map.Entry<String,Double> entry : sorted_map.entrySet()) {
 				  String key = entry.getKey();
 				  Double value = entry.getValue();
@@ -236,16 +241,27 @@ public class FraudRuleV2ApplicationTest {
 						break;
 					}
 				}
-				System.out.println("compare "+count);		
+				logger.info("compare {}",count);		
 			}
 			
 			prev_sorted_map = new TreeMap<String, Double>(bvc);
 			prev_sorted_map.putAll(output);
+	
+			/*
+			System.out.println(evaluation.getCfunction().getValue(new HashSet<>(Arrays.asList(1))));		
+			System.out.println(evaluation.getCfunction().getValue(new HashSet<>(Arrays.asList(2))));
+			System.out.println(evaluation.getCfunction().getValue(new HashSet<>(Arrays.asList(3))));
 			
+			System.out.println();
+			System.out.println(evaluation.getCfunction().getValue(new HashSet<>(Arrays.asList(288))));		
+			System.out.println(evaluation.getCfunction().getValue(new HashSet<>(Arrays.asList(288, 188))));
+			System.out.println(evaluation.getCfunction().getValue(new HashSet<>(Arrays.asList(288, 188, 18))));
+			System.out.println(evaluation.getCfunction().getValue(new HashSet<>(Arrays.asList(288, 188, 18,308))));
+			System.out.println(""+308);
+			System.out.println(evaluation.getCfunction().getValue(new HashSet<>(Arrays.asList(308))));
+			System.out.println(""+1);
+			System.out.println(evaluation.getCfunction().getValue(new HashSet<>(Arrays.asList(1))));*/
 			
-			
-
-
 			logger.info(" duration  {}",duration);
 		}
 	}

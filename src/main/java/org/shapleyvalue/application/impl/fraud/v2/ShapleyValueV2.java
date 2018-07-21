@@ -1,6 +1,5 @@
 package org.shapleyvalue.application.impl.fraud.v2;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -86,19 +85,19 @@ public class ShapleyValueV2 {
 
 	}
 	
-	public void randomCalculateWithThread(long sampleSize) {
+	public void randomCalculateWithThread(long sampleSize, int nbThreads) {
 		if (logger.isDebugEnabled())
 			logger.debug("ShapleyValue calculate started");
 
-		long nbThreads = 4;
-		ExecutorService executor = Executors.newFixedThreadPool((int) nbThreads);
+		
+		ExecutorService executor = Executors.newFixedThreadPool(nbThreads);
 		
         List<Future<List<Double>>> list = new ArrayList<Future<List<Double>>>();
         //Create MyCallable instance
         
         for(int i=0; i< nbThreads; i++){
             //submit Callable tasks to be executed by thread pool
-        	Callable<List<Double>> callable = new MyCallable(sampleSize/nbThreads, size, cfunction);
+        	Callable<List<Double>> callable = new MyCallable(sampleSize/((long)nbThreads), size, cfunction);
             Future<List<Double>> future = executor.submit(callable);
             //add Future to the list, we can get return value using Future
             list.add(future);
@@ -116,37 +115,6 @@ public class ShapleyValueV2 {
                 e.printStackTrace();
             }
         }
-
-		/*long count = 1;
-		if (sampleSize <= 0) {
-			sampleSize = factorialSize;
-		}*/
-
-		
-		/*while (count <= sampleSize) {
-			List<Integer> coalition = null;
-		
-	
-			coalition = RandomPermutations.getRandom(size);
-			
-			if(logger.isDebugEnabled())
-				logger.debug("coalition {}", coalition);
-				
-			currentRange++;
-
-			count++;
-
-			double prevVal = 0.0;
-			cfunction.resetIsFired();
-			for (Integer element : coalition) {
-				//set.add(element);
-				double newVal = cfunction.getValue(element);
-				double contribution = newVal - prevVal;
-				output.set(element, contribution + output.get(element));
-				prevVal = newVal;
-			}
-
-		}*/
 
 	}
 	
