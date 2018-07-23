@@ -115,6 +115,8 @@ public class ShapleyValueV2 {
                 e.printStackTrace();
             }
         }
+        
+        executor.shutdown();
 
 	}
 	
