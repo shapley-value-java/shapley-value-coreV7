@@ -45,7 +45,6 @@ public class CharacteristicFunctionV2 {
 
 
 	public Collection<? extends RuledTransaction> getRuledTransactions() {
-		// TODO Auto-generated method stub
 		return ruledTransactions;
 	}
 

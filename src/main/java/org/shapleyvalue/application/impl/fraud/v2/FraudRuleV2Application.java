@@ -124,7 +124,7 @@ public class FraudRuleV2Application implements ShapleyApplication {
 		if(strategy.isSequential())
 			shapleyValue.calculate(nbCoalitions, false);
 		else 
-			shapleyValue.randomCalculateWithThread(nbCoalitions,4);
+			shapleyValue.randomCalculateWithThreads(nbCoalitions,4);
 		
 		List<Double> tempRes = shapleyValue.getResult(1);
 		Map<String, Double> res = new HashMap<>();
@@ -134,10 +134,10 @@ public class FraudRuleV2Application implements ShapleyApplication {
 		return res;
 	}
 	
-	public TreeMap<String, Double> calculate(long nbCoalitions, CoalitionStrategy strategy, int nbThreads)
+	public TreeMap<String, Double> randomCalculateWithThreads(long nbCoalitions, int nbThreads)
 			throws ShapleyApplicationException {
  
-		shapleyValue.randomCalculateWithThread(nbCoalitions, nbThreads);
+		shapleyValue.randomCalculateWithThreads(nbCoalitions, nbThreads);
 		
 		List<Double> tempRes = shapleyValue.getResult(1);
 		Map<String, Double> res = new HashMap<>();
