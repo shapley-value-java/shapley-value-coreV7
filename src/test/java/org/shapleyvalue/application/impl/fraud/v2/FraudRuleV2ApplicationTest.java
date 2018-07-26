@@ -188,8 +188,8 @@ public class FraudRuleV2ApplicationTest {
 		
 		
 		ClassLoader classLoader = getClass().getClassLoader();
-		//FileReader file = new FileReader(classLoader.getResource("shapley_data_small.csv").getFile());
-		FileReader file = new FileReader(classLoader.getResource("foo3.csv").getFile());
+		FileReader file = new FileReader(classLoader.getResource("shapley_data_small.csv").getFile());
+		//FileReader file = new FileReader(classLoader.getResource("foo3.csv").getFile());
 
 		
 		try (BufferedReader br = new BufferedReader(file)) { 
