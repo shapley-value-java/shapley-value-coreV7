@@ -23,12 +23,15 @@ public class ShapleyValueV2 {
 	private long currentRange;
 	private int size;
 	private long factorialSize;
+	
+	private long fullSampleSize;
 
 	private final Logger logger = LoggerFactory.getLogger(ShapleyValueV2.class);
 
 	public ShapleyValueV2(CharacteristicFunctionV2 cfunction) {
 		this.cfunction = cfunction;
 		size = cfunction.getNbPlayers();
+		fullSampleSize =0;
 
 		try {
 			factorialSize = FactorialUtil.factorial(size);
@@ -93,6 +96,7 @@ public class ShapleyValueV2 {
 		if (logger.isDebugEnabled())
 			logger.debug("ShapleyValue calculate started");
 
+		fullSampleSize += (sampleSize/((long)nbThreads))*nbThreads;
 		
 		ExecutorService executor = Executors.newFixedThreadPool(nbThreads);
 		
@@ -124,6 +128,7 @@ public class ShapleyValueV2 {
 
 	}
 	
+	
 	public List<Double> getResult() {
 		return getResult(0) ;
 	}
@@ -148,6 +153,21 @@ public class ShapleyValueV2 {
 				logger.debug("ShapleyValue calculate normalizedOutput={}", normalizedRes);
 			return normalizedRes;
 		}
+		if (logger.isDebugEnabled())
+			logger.debug("ShapleyValue getResult output={}", output);
+		return res;
+	}
+	
+	public List<Double> getResultWithSampleSize() {
+		
+		List<Double> res = new ArrayList<>();
+		res.add(0.0);
+
+		for (int i = 1; i <= size; i++) {
+			res.add(output.get(i)/fullSampleSize);
+		}
+		System.out.println("fullSampleSize "+fullSampleSize);
+
 		if (logger.isDebugEnabled())
 			logger.debug("ShapleyValue getResult output={}", output);
 		return res;
